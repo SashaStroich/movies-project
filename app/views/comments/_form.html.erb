@@ -1,0 +1,6 @@
+<h2>Create comment</h2>
+<%= form_for :comment, url: film_comments_path(film) do | form |%>
+    <%= render 'comments/form_field', form: form %>
+
+    <%= form.submit %>
+<% end %>

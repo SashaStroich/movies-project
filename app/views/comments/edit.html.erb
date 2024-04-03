@@ -1,0 +1,13 @@
+<%= turbo_frame_tag dom_id(@comment) do %>
+    <h2>Edit comment <%= @comment.id%> (by <%= @comment.user.email%>)</h2>
+
+    <div>
+    <%= form_for @comment, url: film_comment_path(@comment, film_id: @comment.commentable_id) do | form |%>
+
+        <%= render 'comments/form_field', form: form%>
+        
+        <%= form.submit %>
+
+    <% end %>
+    </div>
+<% end %>

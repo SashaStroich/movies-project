@@ -1,0 +1,34 @@
+<div id="<%= dom_id film %>">
+  <p>
+    <strong>Name:</strong>
+    <%= film.name %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= film.description %>
+  </p>
+
+  <p>
+    <strong>Genres:</strong>
+    <%= film.genres.filter_map {|g| g.titleize if g.present?}.join(',')%>
+  </p>
+
+
+  <p>
+    <strong>Release year:</strong>
+    <%= film.release_year %>
+  </p>
+
+  <p>
+    <strong>Director:</strong>
+    <%= film.director %>
+  </p>
+
+  <p>
+    <strong>Duration:</strong>
+    <%= film.duration %>
+  </p>
+  
+
+</div>
