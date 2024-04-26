@@ -4,4 +4,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable
   has_many :comments, dependent: :destroy
+
+  has_one_attached :avatar do |attachable|
+    attachable.variant :tiny, resize_to_limit: [50, 50]
+    attachable.variant :small, resize_to_limit: [100, 100]
+  end
+  def full_name
+    return email if first_name.blank? && last_name.blank?
+
+    "#{first_name} #{last_name}"
+  end
+
 end

@@ -4,6 +4,9 @@
 
 <div id="films">
   <% @films.each do |film| %>
+   <% if film.cover_image_url %>
+    <h2><%= image_tag(film.cover_image_url) %></h2>
+  <% end %>
     <%= render film %>
     <p>
       <%= link_to "Show this film", film %>

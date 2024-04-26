@@ -12,6 +12,12 @@ gem 'faraday'
 
 gem 'pundit'
 
+gem 'image_processing'
+
+gem 'sidekiq'
+
+
+gem "letter_opener", group: :development
 # Use sqlite3 as the database for Active Record
 #gem "sqlite3", "~> 1.4"
 gem "pg"

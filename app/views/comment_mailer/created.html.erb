@@ -1,0 +1,9 @@
+<h1>@subject</h1>
+
+<p>
+  New comment has been created for <%= @comment.commentable %>
+</p>
+
+<p>
+  <%= link_to('Open film', film_url(@comment.commentable), target: '_blank')%>
+</p>

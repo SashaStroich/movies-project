@@ -17,6 +17,10 @@ class OmdbClient
       )
     end
 
+    def find_by_id(id)
+      parse_body(Faraday.get(URL, { apikey: @api_key, i: id }))
+    end
+
     private
     def parse_body(responce)
       JSON.parse(responce.body)

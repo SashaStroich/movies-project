@@ -1,6 +1,9 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
-  resources :films
+
   devise_for :users
+  mount Sidekiq::Web => '/sidekiq'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
  #resources :comment
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -9,8 +12,12 @@ Rails.application.routes.draw do
   get "/articles", to: "articles#index"
   root "articles#index"
   resources :films do
+      collection do
+        get :omdb_search
+        post :omdb_import
+      end
+
     resources :comments, only: %i[create edit update destroy]
   end
-  # Defines the root path route ("/")
-  # root "posts#index"
+  resource :profile, only: %i[edit update], controller: :profiles
 end

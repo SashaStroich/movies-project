@@ -1,33 +1,48 @@
 <p style="color: green"><%= notice %></p>
 
+<% if @film.cover_image_url %>
+  <h2><%= image_tag(@film.cover_image_url) %></h2>
+<% end %>
+
 <%= render @film %>
 
 <div>
   <%= link_to "Edit this film", edit_film_path(@film) %> |
   <%= link_to "Back to films", films_path %>
-
+  
   <%= button_to "Destroy this film", @film, method: :delete %>
 
   <% @film.comments.includes(:user).each do | comment |%>
     <%= turbo_frame_tag(dom_id(comment)) do %>
-      <p><%= comment.body %> (by <%= comment.user.email %>) 
-      <% if policy(comment).edit? %> 
-        <%= link_to('edit', edit_film_comment_path(comment, film_id: comment.commentable.id)) %>
-      <% end %> 
+      <p>
+        <%= comment.body %> (by <%= comment.user.email %>) 
+        <% if policy(comment).edit? %> 
+          <%= link_to('edit', edit_film_comment_path(comment, film_id: comment.commentable.id)) %>
+        <% end %> 
 
-      <% if policy(comment).destroy?%>
-        <%= link_to('destroy', film_comment_path(comment, film_id: comment.commentable.id), method: :delete, data:  { turbo_method: :delete}) %>
-      <% end %> 
+        <% if policy(comment).destroy?%>
+          <%= link_to('destroy', film_comment_path(comment, film_id: comment.commentable.id), method: :delete, data:  { turbo_method: :delete}) %>
+        <% end %> 
+
+       
+        <div class='container-50'>
+        <% comment.comments.includes(:user).each do |sub_comment| %>
+          <%= sub_comment.body %> (replay by <%= sub_comment.user.email %>)
+        </br>
+  <% end %>
+  <%= render partial: 'comments/form', locals: {comment_to: comment}%>
+  </div>
 
       </p>
     <% end %>
   <% end %>
-  <%= render partial: 'comments/form', locals: {film: @film}%>
+  <%= render partial: 'comments/form', locals: {comment_to: @film}%>
 </div>
+
 <article>
   <h3> OMDB info </h3>
   <p>
-    <%= @omdb_movie %>
+    <%= @omdb_film %>
   </p>
 </article>
 

@@ -1,1 +1,14 @@
-<%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+<% if user_signed_in? %>
+  <div class='pull-right'>
+    <%= image_tag(current_user.avatar.variant(:tiny)) if current_user.avatar.attached? %>
+    <%= link_to(current_user.full_name, edit_profile_url) %>
+    <%= link_to 'Log Out', destroy_user_session_path, 
+                          method: :delete, 
+                          data: { turbo_method: :delete } %>
+  </div>
+  <%= link_to 'Create Film', new_film_path %>
+  <%= link_to 'Search OMDB', omdb_search_films_path %>
+  <%= link_to 'Films', films_path %>
+<% else %>
+  <%= link_to 'Sign In', new_user_session_path %>
+<% end %>
